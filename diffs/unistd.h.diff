@@ -1,0 +1,10 @@
+--- /Developer/SDKs/MacOSX10.4u.sdk/usr/include/unistd.h	2007-05-04 17:49:14.000000000 -0400
++++ ../include/unistd.h	2025-04-19 20:51:14.000000000 -0400
+@@ -496,6 +496,7 @@
+ #endif /* __DARWIN_UNIX03 */
+ void	 endusershell(void);
+ int	 execvP(const char *, const char *, char * const *);
++int	 execvpe(const char *, char *const *, char *const *);
+ char	*fflagstostr(unsigned long);
+ int	 fsync(int);
+ int	 getdtablesize(void);

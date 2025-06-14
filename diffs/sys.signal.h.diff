@@ -1,0 +1,32 @@
+--- /Developer/SDKs/MacOSX10.4u.sdk/usr/include/sys/signal.h	2025-03-01 02:30:38.000000000 -0500
++++ ../include/sys/signal.h	2025-04-19 19:21:53.000000000 -0400
+@@ -139,12 +139,14 @@
+ typedef __darwin_mcontext_t		mcontext_t;
+ #endif
+ 
++#if 0
+ #ifndef _POSIX_C_SOURCE
+ #ifndef _MCONTEXT64_T
+ #define _MCONTEXT64_T
+ typedef __darwin_mcontext64_t		mcontext64_t;
+ #endif
+ #endif /* _POSIX_C_SOURCE */
++#endif
+ 
+ #ifndef _PID_T
+ #define _PID_T
+@@ -171,12 +173,14 @@
+ typedef __darwin_ucontext_t		ucontext_t;
+ #endif
+ 
++#if 0
+ #ifndef _POSIX_C_SOURCE
+ #ifndef _UCONTEXT64_T
+ #define _UCONTEXT64_T
+ typedef __darwin_ucontext64_t		ucontext64_t;
+ #endif
+ #endif /* _POSIX_C_SOURCE */
++#endif
+ 
+ #ifndef _UID_T
+ #define _UID_T

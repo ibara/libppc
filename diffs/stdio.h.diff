@@ -1,0 +1,20 @@
+--- /Developer/SDKs/MacOSX10.4u.sdk/usr/include/stdio.h	2025-03-01 08:54:23.000000000 -0500
++++ ../include/stdio.h	2025-04-19 20:27:42.000000000 -0400
+@@ -292,7 +292,7 @@
+ int	 vfprintf(FILE * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vfprintf);
+ int	 vprintf(const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vprintf);
+ int	 vsprintf(char * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vsprintf);
+-#if !defined(_ANSI_SOURCE) && !defined(_POSIX_C_SOURCE)
++#if __POSIX_VISIBLE >= 202405
+ int	 asprintf(char **, const char *, ...) __DARWIN_LDBL_COMPAT(asprintf);
+ int	 vasprintf(char **, const char *, va_list) __DARWIN_LDBL_COMPAT(vasprintf);
+ #endif
+@@ -407,7 +407,7 @@
+ #define	__sfileno(p)	((p)->_file)
+ 
+ #ifndef _ANSI_SOURCE
+-#ifndef _POSIX_C_SOURCE
++#if !defined(_POSIX_C_SOURCE) || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE > 200112L)
+ #define	feof_unlocked(p)	__sfeof(p)
+ #define	ferror_unlocked(p)	__sferror(p)
+ #define	clearerr_unlocked(p)	__sclearerr(p)

@@ -1,0 +1,75 @@
+--- /Developer/SDKs/MacOSX10.4u.sdk/usr/include/sys/cdefs.h	2025-03-01 08:53:54.000000000 -0500
++++ ../include/sys/cdefs.h	2025-04-19 20:35:40.000000000 -0400
+@@ -260,6 +260,7 @@
+  *  _POSIX_C_SOURCE == 199506L		1003.1c-1995, 1003.1i-1995,
+  *					and the omnibus ISO/IEC 9945-1: 1996
+  *  _POSIX_C_SOURCE == 200112L		1003.1-2001
++ *  _POSIX_C_SOURCE == 200809L		1003.1-2008
+  *
+  * In addition, the X/Open Portability Guide, which is now the Single UNIX
+  * Specification, defines a feature-test macro which indicates the version of
+@@ -280,7 +281,10 @@
+ 
+ /* Deal with various X/Open Portability Guides and Single UNIX Spec. */
+ #ifdef _XOPEN_SOURCE
+-#if _XOPEN_SOURCE - 0L >= 600L
++#if _XOPEN_SOURCE - 0L >= 700L
++#undef _POSIX_C_SOURCE
++#define	_POSIX_C_SOURCE		200809L
++#elif _XOPEN_SOURCE - 0L >= 600L
+ #undef _POSIX_C_SOURCE
+ #define	_POSIX_C_SOURCE		200112L
+ #elif _XOPEN_SOURCE - 0L >= 500L
+@@ -298,6 +302,37 @@
+ #endif
+ 
+ /*
++ * The POSIX spec implies a specific value for __ISO_C_VISIBLE.
++ */
++#ifdef _POSIX_C_SOURCE
++# if (_POSIX_C_SOURCE - 0 >= 202405)
++#  define __POSIX_VISIBLE	202405
++#  define __ISO_C_VISIBLE	2017
++# elif (_POSIX_C_SOURCE - 0 >= 200809)
++#  define __POSIX_VISIBLE	200809
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 200112)
++#  define __POSIX_VISIBLE	200112
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 199506)
++#  define __POSIX_VISIBLE	199506
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 199309)
++#  define __POSIX_VISIBLE	199309
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 2)
++#  define __POSIX_VISIBLE	199209
++#  define __ISO_C_VISIBLE	1990
++# else
++#  define __POSIX_VISIBLE	199009
++#  define __ISO_C_VISIBLE	1990
++# endif
++#elif defined(_POSIX_SOURCE)
++#  define __POSIX_VISIBLE	198808
++#  define __ISO_C_VISIBLE	0
++#endif
++
++/*
+  * long long is not supported in c89 (__STRICT_ANSI__), but g++ -ansi and
+  * c99 still want long longs.  While not perfect, we allow long longs for
+  * g++.
+@@ -335,4 +370,14 @@
+ #  error Unknown architecture
+ #endif
+ 
++/*
++ * Default values.
++ */
++#ifndef __POSIX_VISIBLE
++# define __POSIX_VISIBLE	202405
++#endif
++#ifndef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	2017
++#endif
++
+ #endif /* !_CDEFS_H_ */
